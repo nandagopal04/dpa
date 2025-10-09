@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dpa.dto.AppointmentDTO;
 import com.dpa.service.AppointmentService;
+import com.dpa.vo.AppointmentSummaryVO;
 
 @RestController()
 @RequestMapping("/appointment")
@@ -26,7 +27,16 @@ public class AppointmentController {
 			@RequestParam String toDate) {
 		List<AppointmentDTO> appointmentDTOs = appointmentService.getAppointmentsBetweenDates(LocalDate.parse(fromDate),
 				LocalDate.parse(toDate));
-		return new ResponseEntity<List<AppointmentDTO>>(appointmentDTOs, HttpStatus.OK);
+		return (appointmentDTOs == null || appointmentDTOs.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: new ResponseEntity<List<AppointmentDTO>>(appointmentDTOs, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/summary/with/doctor-names")
+	public ResponseEntity<List<AppointmentSummaryVO>> getAllAppointmentsWithDoctorNames() {
+		List<AppointmentSummaryVO> appointmentSummaryVOs = appointmentService.getAllAppointmentsWithDoctorNames();
+		return (appointmentSummaryVOs == null || appointmentSummaryVOs.isEmpty())
+				? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: new ResponseEntity<List<AppointmentSummaryVO>>(appointmentSummaryVOs, HttpStatus.OK);
 	}
 
 }

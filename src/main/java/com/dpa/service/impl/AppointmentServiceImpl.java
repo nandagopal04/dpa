@@ -12,6 +12,7 @@ import com.dpa.dto.AppointmentDTO;
 import com.dpa.entity.Appointment;
 import com.dpa.repository.AppointmentRepository;
 import com.dpa.service.AppointmentService;
+import com.dpa.vo.AppointmentSummaryVO;
 
 @Service("appointmentService")
 public class AppointmentServiceImpl implements AppointmentService {
@@ -27,6 +28,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 		List<Appointment> appointments = appointmentRepository.getAppointmentsBetweenDates(fromDate, toDate);
 		return modelMapper.map(appointments, new TypeToken<List<AppointmentDTO>>() {
 		}.getType());
+	}
+
+	@Override
+	public List<AppointmentSummaryVO> getAllAppointmentsWithDoctorNames() {
+		return appointmentRepository.getAllWithDoctorNames();
 	}
 
 }
