@@ -1,32 +1,26 @@
-package com.dpa.entity;
+package com.dpa.vo;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.dpa.constant.GenderType;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = { "id" })
-public class Patient implements Serializable {
-
-	private static final long serialVersionUID = 1278880233737472277L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode()
+public class PatientAppointmentSummaryVO {
 	private String id;
 	private String name;
 	private LocalDate dob;
@@ -34,5 +28,5 @@ public class Patient implements Serializable {
 	private GenderType gender;
 	private BigDecimal weight;
 	private BigDecimal height;
-
+	private Long poointmentCount;
 }
