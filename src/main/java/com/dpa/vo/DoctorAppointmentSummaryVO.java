@@ -28,5 +28,6 @@ public class DoctorAppointmentSummaryVO {
 	private String speciality;
 	private BigDecimal fee;
 	private Long totalAppointments;
+	private Long totalPatitens;
 
 }
