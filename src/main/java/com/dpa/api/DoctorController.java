@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dpa.dto.DoctorMasterDTO;
 import com.dpa.service.DoctorService;
 import com.dpa.vo.DoctorAppointmentSummaryVO;
 
@@ -25,6 +26,14 @@ public class DoctorController {
 				.getDoctorAppointmentSummaryWithPatientCountAndAppointmentCount();
 		return (summary == null || summary.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: ResponseEntity.ok(summary);
+	}
+
+	// Fetch doctors with fee greater than average fee
+	@GetMapping(value = "/above-avg-fee")
+	public ResponseEntity<List<DoctorMasterDTO>> getDoctorsWithAboveAverageFee() {
+		List<DoctorMasterDTO> doctors = doctorService.getDoctorsWithAboveAverageFee();
+		return (doctors == null || doctors.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: ResponseEntity.ok(doctors);
 	}
 
 }
