@@ -26,4 +26,10 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
 			""")
 	List<PatientAppointmentSummaryVO> getAllPatientsWithAppointmentCount();
 
+	@Query("""
+			SELECT p FROM Patient p
+			Where timestampdiff(YEAR, p.dob, CURRENT_DATE) > :age
+			""")
+	List<Patient> getPatientsGreaterThanAge(Integer age);
+
 }

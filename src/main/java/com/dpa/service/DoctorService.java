@@ -11,4 +11,6 @@ public interface DoctorService {
 
 	List<DoctorMasterDTO> getDoctorsWithAboveAverageFee();
 
+	List<DoctorMasterDTO> getDoctorsHavingAtLeastNAppointments(Integer minCount);
+
 }

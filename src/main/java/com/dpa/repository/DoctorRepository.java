@@ -32,5 +32,11 @@ public interface DoctorRepository extends JpaRepository<DoctorMaster, String> {
 			WHERE d.fee > (SELECT AVG(d2.fee) FROM DoctorMaster d2)
 			""")
 	List<DoctorMaster> findDoctorsWithAboveAverageFee();
+	
+	@Query("""
+			SELECT d FROM DoctorMaster d
+			WHERE (SELECT COUNT(a.id) FROM Appointment a WHERE a.doctorId = d.id) >= :count
+			""")
+	List<DoctorMaster> getDoctorsHavingAtLeastNAppointments(int count);
 
 }

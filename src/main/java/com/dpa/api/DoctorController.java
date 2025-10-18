@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dpa.dto.DoctorMasterDTO;
@@ -32,6 +33,13 @@ public class DoctorController {
 	@GetMapping(value = "/above-avg-fee")
 	public ResponseEntity<List<DoctorMasterDTO>> getDoctorsWithAboveAverageFee() {
 		List<DoctorMasterDTO> doctors = doctorService.getDoctorsWithAboveAverageFee();
+		return (doctors == null || doctors.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: ResponseEntity.ok(doctors);
+	}
+
+	@GetMapping(value = "/having-min-appointments")
+	public ResponseEntity<List<DoctorMasterDTO>> getDoctorsHavingAtLeastNAppointments(@RequestParam Integer minCount) {
+		List<DoctorMasterDTO> doctors = doctorService.getDoctorsHavingAtLeastNAppointments(minCount);
 		return (doctors == null || doctors.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: ResponseEntity.ok(doctors);
 	}

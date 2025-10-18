@@ -34,4 +34,11 @@ public class DoctorServiceImpl implements DoctorService {
 		}.getType());
 	}
 
+	@Override
+	public List<DoctorMasterDTO> getDoctorsHavingAtLeastNAppointments(Integer minCount) {
+		List<DoctorMaster> doctorMasters = doctorRepository.getDoctorsHavingAtLeastNAppointments(minCount);
+		return modelMapper.map(doctorMasters, new TypeToken<List<DoctorMasterDTO>>() {
+		}.getType());
+	}
+
 }
