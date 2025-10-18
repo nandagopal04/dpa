@@ -34,5 +34,12 @@ public class PatientController {
 		return (patients == null || patients.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(patients, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/booked-two-doctors")
+	public ResponseEntity<List<PatientDTO>> getPatientsBookedTwoDoctors() {
+		List<PatientDTO> patients = patientService.getPatientsBookedTwoDoctors();
+		return (patients == null || patients.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: new ResponseEntity<>(patients, HttpStatus.OK);
+	}
 
 }

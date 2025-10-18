@@ -11,4 +11,6 @@ public interface PatientService {
 
 	List<PatientDTO> getPatientsGreaterThanAge(Integer age);
 
+	List<PatientDTO> getPatientsBookedTwoDoctors();
+
 }

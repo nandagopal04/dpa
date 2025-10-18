@@ -31,5 +31,12 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
 			Where timestampdiff(YEAR, p.dob, CURRENT_DATE) > :age
 			""")
 	List<Patient> getPatientsGreaterThanAge(Integer age);
+	
+	@Query("""
+			SELECT p FROM Patient p
+			WHERE p.id IN(SELECT a.patientId FROM Appointment a
+			GROUP BY a.patientId HAVING COUNT(DISTINCT a.doctorId) = 2)
+			""")
+	List<Patient> getPatientsBookedTwoDoctors();
 
 }

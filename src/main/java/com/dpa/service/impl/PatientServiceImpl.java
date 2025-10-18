@@ -34,4 +34,11 @@ public class PatientServiceImpl implements PatientService {
 		}.getType());
 	}
 
+	@Override
+	public List<PatientDTO> getPatientsBookedTwoDoctors() {
+		List<Patient> patients = patientRepository.getPatientsBookedTwoDoctors();
+		return modelMapper.map(patients, new TypeToken<List<PatientDTO>>() {
+		}.getType());
+	}
+
 }
