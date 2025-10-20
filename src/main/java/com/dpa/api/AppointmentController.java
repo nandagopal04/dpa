@@ -1,9 +1,9 @@
 package com.dpa.api;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,20 +23,24 @@ public class AppointmentController {
 	private AppointmentService appointmentService;
 
 	@GetMapping(value = "/by/dates")
-	public ResponseEntity<List<AppointmentDTO>> getAppointmentsBetweenDates(@RequestParam String fromDate,
-			@RequestParam String toDate) {
-		List<AppointmentDTO> appointmentDTOs = appointmentService.getAppointmentsBetweenDates(LocalDate.parse(fromDate),
-				LocalDate.parse(toDate));
+	public ResponseEntity<Page<AppointmentDTO>> getAppointmentsBetweenDates(@RequestParam String fromDate,
+			@RequestParam String toDate, @RequestParam(required = false, defaultValue = "0") Integer offset,
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+		Page<AppointmentDTO> appointmentDTOs = appointmentService.getAppointmentsBetweenDates(LocalDate.parse(fromDate),
+				LocalDate.parse(toDate), offset, pageSize);
 		return (appointmentDTOs == null || appointmentDTOs.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-				: new ResponseEntity<List<AppointmentDTO>>(appointmentDTOs, HttpStatus.OK);
+				: new ResponseEntity<Page<AppointmentDTO>>(appointmentDTOs, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/summary/with/doctor-names")
-	public ResponseEntity<List<AppointmentSummaryVO>> getAllAppointmentsWithDoctorNames() {
-		List<AppointmentSummaryVO> appointmentSummaryVOs = appointmentService.getAllAppointmentsWithDoctorNames();
+	public ResponseEntity<Page<AppointmentSummaryVO>> getAllAppointmentsWithDoctorNames(
+			@RequestParam(required = false, defaultValue = "0") Integer offset,
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+		Page<AppointmentSummaryVO> appointmentSummaryVOs = appointmentService.getAllAppointmentsWithDoctorNames(offset,
+				pageSize);
 		return (appointmentSummaryVOs == null || appointmentSummaryVOs.isEmpty())
 				? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-				: new ResponseEntity<List<AppointmentSummaryVO>>(appointmentSummaryVOs, HttpStatus.OK);
+				: new ResponseEntity<Page<AppointmentSummaryVO>>(appointmentSummaryVOs, HttpStatus.OK);
 	}
 
 }

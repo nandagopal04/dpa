@@ -5,6 +5,9 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.dpa.dto.DoctorMasterDTO;
@@ -23,21 +26,29 @@ public class DoctorServiceImpl implements DoctorService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public List<DoctorAppointmentSummaryVO> getDoctorAppointmentSummaryWithPatientCountAndAppointmentCount() {
-		return doctorRepository.getDoctorAppointmentSummaryWithPatientCountAndAppointmentCount();
+	public Page<DoctorAppointmentSummaryVO> getDoctorAppointmentSummaryWithPatientCountAndAppointmentCount(
+			Integer offset, Integer pageSize) {
+		return doctorRepository
+				.getDoctorAppointmentSummaryWithPatientCountAndAppointmentCount(PageRequest.of(offset, pageSize));
 	}
 
 	@Override
-	public List<DoctorMasterDTO> getDoctorsWithAboveAverageFee() {
-		List<DoctorMaster> doctorMasters = doctorRepository.findDoctorsWithAboveAverageFee();
-		return modelMapper.map(doctorMasters, new TypeToken<List<DoctorMasterDTO>>() {
-		}.getType());
+	public Page<DoctorMasterDTO> getDoctorsWithAboveAverageFee(Integer offset, Integer pageSize) {
+		Page<DoctorMaster> doctorMasters = doctorRepository
+				.findDoctorsWithAboveAverageFee(PageRequest.of(offset, pageSize));
+		List<DoctorMasterDTO> doctorMasterDTOs = modelMapper.map(doctorMasters.getContent(),
+				new TypeToken<List<DoctorMasterDTO>>() {
+				}.getType());
+		return new PageImpl<DoctorMasterDTO>(doctorMasterDTOs, doctorMasters.getPageable(),
+				doctorMasters.getTotalElements());
 	}
 
 	@Override
-	public List<DoctorMasterDTO> getDoctorsHavingAtLeastNAppointments(Integer minCount) {
-		List<DoctorMaster> doctorMasters = doctorRepository.getDoctorsHavingAtLeastNAppointments(minCount);
-		return modelMapper.map(doctorMasters, new TypeToken<List<DoctorMasterDTO>>() {
+	public Page<DoctorMasterDTO> getDoctorsHavingAtLeastNAppointments(Integer minCount, Integer offset,
+			Integer pageSize) {
+		Page<DoctorMaster> doctorMasters = doctorRepository.getDoctorsHavingAtLeastNAppointments(minCount,
+				PageRequest.of(offset, pageSize));
+		return modelMapper.map(doctorMasters, new TypeToken<Page<DoctorMasterDTO>>() {
 		}.getType());
 	}
 

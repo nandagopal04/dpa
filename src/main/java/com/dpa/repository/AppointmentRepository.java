@@ -1,8 +1,9 @@
 package com.dpa.repository;
 
 import java.time.LocalDate;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,8 +16,8 @@ import com.dpa.vo.AppointmentSummaryVO;
 public interface AppointmentRepository extends JpaRepository<Appointment, String> {
 
 	@Query("SELECT a FROM Appointment a WHERE FUNCTION('DATE', a.bookedOn) >= :startDate AND FUNCTION('DATE', a.bookedOn) <= :endDate")
-	List<Appointment> getAppointmentsBetweenDates(@Param("startDate") LocalDate startDate,
-												  @Param("endDate") LocalDate endDate);
+	Page<Appointment> getAppointmentsBetweenDates(@Param("startDate") LocalDate startDate,
+												  @Param("endDate") LocalDate endDate, Pageable pagable);
 	
 	@Query("""
 			SELECT new com.dpa.vo.AppointmentSummaryVO(a.id,
@@ -26,6 +27,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
 													   d.name)
 			FROM Appointment a INNER JOIN DoctorMaster d ON a.doctorId = d.id
 			""")
-	List<AppointmentSummaryVO> getAllWithDoctorNames();
+	Page<AppointmentSummaryVO> getAllWithDoctorNames(Pageable pagable);
 
 }

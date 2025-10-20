@@ -1,16 +1,16 @@
 package com.dpa.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.dpa.dto.DoctorMasterDTO;
 import com.dpa.vo.DoctorAppointmentSummaryVO;
 
 public interface DoctorService {
 
-	List<DoctorAppointmentSummaryVO> getDoctorAppointmentSummaryWithPatientCountAndAppointmentCount();
+	Page<DoctorAppointmentSummaryVO> getDoctorAppointmentSummaryWithPatientCountAndAppointmentCount(Integer offset, Integer pageSize);
 
-	List<DoctorMasterDTO> getDoctorsWithAboveAverageFee();
+	Page<DoctorMasterDTO> getDoctorsWithAboveAverageFee(Integer offset, Integer pageSize);
 
-	List<DoctorMasterDTO> getDoctorsHavingAtLeastNAppointments(Integer minCount);
+	Page<DoctorMasterDTO> getDoctorsHavingAtLeastNAppointments(Integer minCount, Integer offset, Integer pageSize);
 
 }

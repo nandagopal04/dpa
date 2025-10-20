@@ -1,8 +1,7 @@
 package com.dpa.api;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,22 +21,29 @@ public class PatientController {
 	private PatientService patientService;
 
 	@GetMapping(value = "/summary/with-apt-count")
-	public ResponseEntity<List<PatientAppointmentSummaryVO>> getAllPatientsWithAppointmentCount() {
-		List<PatientAppointmentSummaryVO> patients = patientService.getAllPatientsWithAppointmentCount();
+	public ResponseEntity<Page<PatientAppointmentSummaryVO>> getAllPatientsWithAppointmentCount(
+			@RequestParam(required = false, defaultValue = "0") Integer offset,
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+		Page<PatientAppointmentSummaryVO> patients = patientService.getAllPatientsWithAppointmentCount(offset,
+				pageSize);
 		return (patients == null || patients.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(patients, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/age/greater-than")
-	public ResponseEntity<List<PatientDTO>> getPatientsGreaterThanAge(@RequestParam Integer age) {
-		List<PatientDTO> patients = patientService.getPatientsGreaterThanAge(age);
+	public ResponseEntity<Page<PatientDTO>> getPatientsGreaterThanAge(@RequestParam Integer age,
+			@RequestParam(required = false, defaultValue = "0") Integer offset,
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+		Page<PatientDTO> patients = patientService.getPatientsGreaterThanAge(age, offset, pageSize);
 		return (patients == null || patients.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(patients, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/booked-two-doctors")
-	public ResponseEntity<List<PatientDTO>> getPatientsBookedTwoDoctors() {
-		List<PatientDTO> patients = patientService.getPatientsBookedTwoDoctors();
+	public ResponseEntity<Page<PatientDTO>> getPatientsBookedTwoDoctors(
+			@RequestParam(required = false, defaultValue = "0") Integer offset,
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+		Page<PatientDTO> patients = patientService.getPatientsBookedTwoDoctors(offset, pageSize);
 		return (patients == null || patients.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(patients, HttpStatus.OK);
 	}

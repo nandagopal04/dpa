@@ -1,16 +1,16 @@
 package com.dpa.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.dpa.dto.PatientDTO;
 import com.dpa.vo.PatientAppointmentSummaryVO;
 
 public interface PatientService {
 
-	List<PatientAppointmentSummaryVO> getAllPatientsWithAppointmentCount();
+	Page<PatientAppointmentSummaryVO> getAllPatientsWithAppointmentCount(Integer offset, Integer pageSize);
 
-	List<PatientDTO> getPatientsGreaterThanAge(Integer age);
+	Page<PatientDTO> getPatientsGreaterThanAge(Integer age, Integer offset, Integer pageSize);
 
-	List<PatientDTO> getPatientsBookedTwoDoctors();
+	Page<PatientDTO> getPatientsBookedTwoDoctors(Integer offset, Integer pageSize);
 
 }

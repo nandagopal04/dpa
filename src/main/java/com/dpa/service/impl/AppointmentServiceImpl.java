@@ -1,11 +1,12 @@
 package com.dpa.service.impl;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.dpa.dto.AppointmentDTO;
@@ -24,15 +25,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public List<AppointmentDTO> getAppointmentsBetweenDates(LocalDate fromDate, LocalDate toDate) {
-		List<Appointment> appointments = appointmentRepository.getAppointmentsBetweenDates(fromDate, toDate);
-		return modelMapper.map(appointments, new TypeToken<List<AppointmentDTO>>() {
+	public Page<AppointmentDTO> getAppointmentsBetweenDates(LocalDate fromDate, LocalDate toDate, Integer offset, Integer pageSize) {
+		Page<Appointment> appointments = appointmentRepository.getAppointmentsBetweenDates(fromDate, toDate, PageRequest.of(offset, pageSize));
+		return modelMapper.map(appointments, new TypeToken<Page<AppointmentDTO>>() {
 		}.getType());
 	}
 
 	@Override
-	public List<AppointmentSummaryVO> getAllAppointmentsWithDoctorNames() {
-		return appointmentRepository.getAllWithDoctorNames();
+	public Page<AppointmentSummaryVO> getAllAppointmentsWithDoctorNames(Integer offset, Integer pageSize) {
+		return appointmentRepository.getAllWithDoctorNames(PageRequest.of(offset, pageSize));
 	}
 
 }
