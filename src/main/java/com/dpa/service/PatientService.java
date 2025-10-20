@@ -1,5 +1,7 @@
 package com.dpa.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.dpa.dto.PatientDTO;
@@ -12,5 +14,7 @@ public interface PatientService {
 	Page<PatientDTO> getPatientsGreaterThanAge(Integer age, Integer offset, Integer pageSize);
 
 	Page<PatientDTO> getPatientsBookedTwoDoctors(Integer offset, Integer pageSize);
+
+	List<String> getPatientIds();
 
 }

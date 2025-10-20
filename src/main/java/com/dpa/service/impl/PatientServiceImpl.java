@@ -1,5 +1,7 @@
 package com.dpa.service.impl;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,11 @@ public class PatientServiceImpl implements PatientService {
 		Page<Patient> patients = patientRepository.getPatientsBookedTwoDoctors(PageRequest.of(offset, pageSize));
 		return modelMapper.map(patients, new TypeToken<Page<PatientDTO>>() {
 		}.getType());
+	}
+
+	@Override
+	public List<String> getPatientIds() {
+		return patientRepository.getAllPatientIds();
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.dpa.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,13 @@ public class PatientController {
 		Page<PatientDTO> patients = patientService.getPatientsBookedTwoDoctors(offset, pageSize);
 		return (patients == null || patients.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(patients, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/ids")
+	public ResponseEntity<List<String>> getPatientIds() {
+		List<String> patientIds = patientService.getPatientIds();
+		return (patientIds == null || patientIds.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: new ResponseEntity<>(patientIds, HttpStatus.OK);
 	}
 
 }

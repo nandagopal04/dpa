@@ -1,5 +1,7 @@
 package com.dpa.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,12 +33,17 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
 			Where timestampdiff(YEAR, p.dob, CURRENT_DATE) > :age
 			""")
 	Page<Patient> getPatientsGreaterThanAge(Integer age, Pageable pagable);
-	
+
 	@Query("""
 			SELECT p FROM Patient p
 			WHERE p.id IN(SELECT a.patientId FROM Appointment a
 			GROUP BY a.patientId HAVING COUNT(DISTINCT a.doctorId) = 2)
 			""")
 	Page<Patient> getPatientsBookedTwoDoctors(Pageable pagable);
+
+	@Query("""
+			SELECT p.id FROM Patient p
+			""")
+	List<String> getAllPatientIds();
 
 }
