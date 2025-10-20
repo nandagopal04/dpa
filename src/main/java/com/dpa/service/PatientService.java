@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import com.dpa.dto.PatientDTO;
 import com.dpa.vo.PatientAppointmentSummaryVO;
+import com.dpa.vo.PatientNameAndDob;
 
 public interface PatientService {
 
@@ -16,5 +17,7 @@ public interface PatientService {
 	Page<PatientDTO> getPatientsBookedTwoDoctors(Integer offset, Integer pageSize);
 
 	List<String> getPatientIds();
+
+	List<PatientNameAndDob> getPatientNamesAndDobs();
 
 }

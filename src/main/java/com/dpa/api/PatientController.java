@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dpa.dto.PatientDTO;
 import com.dpa.service.PatientService;
 import com.dpa.vo.PatientAppointmentSummaryVO;
+import com.dpa.vo.PatientNameAndDob;
 
 @RestController
 @RequestMapping("/patient")
@@ -55,6 +56,14 @@ public class PatientController {
 		List<String> patientIds = patientService.getPatientIds();
 		return (patientIds == null || patientIds.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(patientIds, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/names-and-dobs")
+	public ResponseEntity<List<PatientNameAndDob>> getPatientNamesAndDobs() {
+		List<PatientNameAndDob> patientNamesAndDobs = patientService.getPatientNamesAndDobs();
+		return (patientNamesAndDobs == null || patientNamesAndDobs.isEmpty())
+				? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: new ResponseEntity<>(patientNamesAndDobs, HttpStatus.OK);
 	}
 
 }

@@ -14,6 +14,7 @@ import com.dpa.entity.Patient;
 import com.dpa.repository.PatientRepository;
 import com.dpa.service.PatientService;
 import com.dpa.vo.PatientAppointmentSummaryVO;
+import com.dpa.vo.PatientNameAndDob;
 
 @Service("patientService")
 public class PatientServiceImpl implements PatientService {
@@ -46,6 +47,11 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public List<String> getPatientIds() {
 		return patientRepository.getAllPatientIds();
+	}
+
+	@Override
+	public List<PatientNameAndDob> getPatientNamesAndDobs() {
+		return patientRepository.getPatientNamesAndDobs();
 	}
 
 }

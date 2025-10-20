@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dpa.entity.Patient;
 import com.dpa.vo.PatientAppointmentSummaryVO;
+import com.dpa.vo.PatientNameAndDob;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, String> {
@@ -45,5 +46,10 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
 			SELECT p.id FROM Patient p
 			""")
 	List<String> getAllPatientIds();
+
+	@Query("""
+			SELECT p.name as name, p.dob as dob FROM Patient p
+			""")
+	List<PatientNameAndDob> getPatientNamesAndDobs();
 
 }
