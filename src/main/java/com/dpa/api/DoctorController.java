@@ -1,5 +1,8 @@
 package com.dpa.api;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -45,6 +48,15 @@ public class DoctorController {
 			@RequestParam(required = false, defaultValue = "0") Integer offset,
 			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
 		Page<DoctorMasterDTO> doctors = doctorService.getDoctorsHavingAtLeastNAppointments(minCount, offset, pageSize);
+		return (doctors == null || doctors.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: ResponseEntity.ok(doctors);
+	}
+
+	@GetMapping(value = "/having-appointments/between-dates")
+	public ResponseEntity<List<DoctorMasterDTO>> getDoctorsHavingAppointmentsBetweenDates(@RequestParam String fromDate,
+			@RequestParam String toDate) {
+		List<DoctorMasterDTO> doctors = doctorService.getDoctorsHavingAppointmentsBetweenDates(
+				LocalDate.parse(fromDate), LocalDate.parse(toDate));
 		return (doctors == null || doctors.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: ResponseEntity.ok(doctors);
 	}

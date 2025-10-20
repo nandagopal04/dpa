@@ -1,5 +1,6 @@
 package com.dpa.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -49,6 +50,13 @@ public class DoctorServiceImpl implements DoctorService {
 		Page<DoctorMaster> doctorMasters = doctorRepository.getDoctorsHavingAtLeastNAppointments(minCount,
 				PageRequest.of(offset, pageSize));
 		return modelMapper.map(doctorMasters, new TypeToken<Page<DoctorMasterDTO>>() {
+		}.getType());
+	}
+
+	@Override
+	public List<DoctorMasterDTO> getDoctorsHavingAppointmentsBetweenDates(LocalDate fromDate, LocalDate toDate) {
+		List<DoctorMaster> doctorMasters = doctorRepository.getDoctorsHavingAppointmentsBetweenDates(fromDate, toDate);
+		return modelMapper.map(doctorMasters, new TypeToken<List<DoctorMasterDTO>>() {
 		}.getType());
 	}
 
