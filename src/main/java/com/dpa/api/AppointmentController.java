@@ -1,6 +1,7 @@
 package com.dpa.api;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dpa.dto.AppointmentDTO;
+import com.dpa.dto.AppointmentViewDTO;
 import com.dpa.service.AppointmentService;
 import com.dpa.vo.AppointmentSummaryVO;
 
@@ -41,6 +43,13 @@ public class AppointmentController {
 		return (appointmentSummaryVOs == null || appointmentSummaryVOs.isEmpty())
 				? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<Page<AppointmentSummaryVO>>(appointmentSummaryVOs, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/view")
+	public ResponseEntity<List<AppointmentViewDTO>> getAllAppointmentViews() {
+		List<AppointmentViewDTO> appointmentViews = appointmentService.getAllAppointmentViews();
+		return (appointmentViews == null || appointmentViews.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: new ResponseEntity<>(appointmentViews, HttpStatus.OK);
 	}
 
 }

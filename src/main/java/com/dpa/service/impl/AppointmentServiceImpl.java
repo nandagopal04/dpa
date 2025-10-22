@@ -1,6 +1,7 @@
 package com.dpa.service.impl;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.dpa.dto.AppointmentDTO;
+import com.dpa.dto.AppointmentViewDTO;
 import com.dpa.entity.Appointment;
 import com.dpa.repository.AppointmentRepository;
 import com.dpa.service.AppointmentService;
@@ -34,6 +36,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public Page<AppointmentSummaryVO> getAllAppointmentsWithDoctorNames(Integer offset, Integer pageSize) {
 		return appointmentRepository.getAllWithDoctorNames(PageRequest.of(offset, pageSize));
+	}
+
+	@Override
+	public List<AppointmentViewDTO> getAllAppointmentViews() {
+		return appointmentRepository.getAllAppointmentViews();
 	}
 
 }
