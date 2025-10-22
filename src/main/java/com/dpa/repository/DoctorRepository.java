@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dpa.entity.DoctorMaster;
 import com.dpa.vo.DoctorAppointmentSummaryVO;
+import com.dpa.vo.DoctorFee;
 
 import jakarta.persistence.QueryHint;
 
@@ -57,5 +58,12 @@ public interface DoctorRepository extends JpaRepository<DoctorMaster, String> {
 			WHERE FUNCTION('DATE', a.bookedOn) BETWEEN :fromDate AND :toDate
 			""")
 	List<DoctorMaster> getDoctorsHavingAppointmentsBetweenDates(LocalDate fromDate, LocalDate toDate);
+
+	@Query("""
+			SELECT d.name as doctorName,
+				   d.fee as doctorFee
+				FROM DoctorMaster d
+			""")
+	List<DoctorFee> getAllDoctorsAndFees();
 
 }

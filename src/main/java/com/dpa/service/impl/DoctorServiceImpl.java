@@ -16,6 +16,7 @@ import com.dpa.entity.DoctorMaster;
 import com.dpa.repository.DoctorRepository;
 import com.dpa.service.DoctorService;
 import com.dpa.vo.DoctorAppointmentSummaryVO;
+import com.dpa.vo.DoctorFee;
 
 @Service("doctorService")
 public class DoctorServiceImpl implements DoctorService {
@@ -58,6 +59,11 @@ public class DoctorServiceImpl implements DoctorService {
 		List<DoctorMaster> doctorMasters = doctorRepository.getDoctorsHavingAppointmentsBetweenDates(fromDate, toDate);
 		return modelMapper.map(doctorMasters, new TypeToken<List<DoctorMasterDTO>>() {
 		}.getType());
+	}
+
+	@Override
+	public List<DoctorFee> getAllDoctorsAndFees() {
+		return doctorRepository.getAllDoctorsAndFees();
 	}
 
 }

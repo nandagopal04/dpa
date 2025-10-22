@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dpa.dto.DoctorMasterDTO;
 import com.dpa.service.DoctorService;
 import com.dpa.vo.DoctorAppointmentSummaryVO;
+import com.dpa.vo.DoctorFee;
 
 @RestController
 @RequestMapping("/doctor")
@@ -55,10 +56,17 @@ public class DoctorController {
 	@GetMapping(value = "/having-appointments/between-dates")
 	public ResponseEntity<List<DoctorMasterDTO>> getDoctorsHavingAppointmentsBetweenDates(@RequestParam String fromDate,
 			@RequestParam String toDate) {
-		List<DoctorMasterDTO> doctors = doctorService.getDoctorsHavingAppointmentsBetweenDates(
-				LocalDate.parse(fromDate), LocalDate.parse(toDate));
+		List<DoctorMasterDTO> doctors = doctorService
+				.getDoctorsHavingAppointmentsBetweenDates(LocalDate.parse(fromDate), LocalDate.parse(toDate));
 		return (doctors == null || doctors.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: ResponseEntity.ok(doctors);
+	}
+
+	@GetMapping(value = "/name-and-fee")
+	public ResponseEntity<List<DoctorFee>> getAllDoctorsAndFees() {
+		List<DoctorFee> doctorFees = doctorService.getAllDoctorsAndFees();
+		return (doctorFees == null || doctorFees.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: ResponseEntity.ok(doctorFees);
 	}
 
 }
