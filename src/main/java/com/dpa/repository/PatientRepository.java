@@ -52,4 +52,11 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
 			""")
 	List<PatientNameAndDob> getPatientNamesAndDobs();
 
+	@Query("""
+			SELECT DISTINCT p.name FROM Patient p
+				JOIN Appointment a ON a.patientId = p.id
+				WHERE FUNCTION('MONTH', a.bookedOn) = :month
+			""")
+	List<String> getPatientNamesHavingAppointmentsInMonth(Integer month);
+
 }

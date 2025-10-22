@@ -54,4 +54,9 @@ public class PatientServiceImpl implements PatientService {
 		return patientRepository.getPatientNamesAndDobs();
 	}
 
+	@Override
+	public List<String> getPatientNamesHavingAppointmentsInMonth(Integer month) {
+		return patientRepository.getPatientNamesHavingAppointmentsInMonth(month);
+	}
+
 }

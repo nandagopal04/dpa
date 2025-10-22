@@ -20,4 +20,6 @@ public interface PatientService {
 
 	List<PatientNameAndDob> getPatientNamesAndDobs();
 
+	List<String> getPatientNamesHavingAppointmentsInMonth(Integer month);
+
 }

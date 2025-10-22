@@ -66,4 +66,13 @@ public class PatientController {
 				: new ResponseEntity<>(patientNamesAndDobs, HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/names/having-appointments/by-month")
+	public ResponseEntity<List<String>> getPatientNamesHavingAppointmentsInMonth(
+			@RequestParam Integer month) {
+		List<String> patientNamesAndDobs = patientService.getPatientNamesHavingAppointmentsInMonth(month);
+		return (patientNamesAndDobs == null || patientNamesAndDobs.isEmpty())
+				? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: new ResponseEntity<>(patientNamesAndDobs, HttpStatus.OK);
+	}
+
 }
