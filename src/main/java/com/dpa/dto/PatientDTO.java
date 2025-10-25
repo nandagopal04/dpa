@@ -26,7 +26,7 @@ public class PatientDTO {
 	private String name;
 	private LocalDate dob;
 	@Enumerated(EnumType.STRING)
-	private GenderType geneder;
+	private GenderType gender;
 	private BigDecimal weight;
 	private BigDecimal height;
 

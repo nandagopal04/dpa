@@ -3,8 +3,6 @@ package com.dpa.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.dpa.dto.DoctorMasterDTO;
 import com.dpa.entity.DoctorMaster;
+import com.dpa.mapper.DoctorMapper;
 import com.dpa.repository.DoctorRepository;
 import com.dpa.service.DoctorService;
 import com.dpa.vo.DoctorAppointmentSummaryVO;
@@ -24,8 +23,12 @@ public class DoctorServiceImpl implements DoctorService {
 	@Autowired
 	private DoctorRepository doctorRepository;
 
+	private DoctorMapper doctorMapper;
+
 	@Autowired
-	private ModelMapper modelMapper;
+	public void setDoctorMapper(DoctorMapper doctorMapper) {
+		this.doctorMapper = doctorMapper;
+	}
 
 	@Override
 	public Page<DoctorAppointmentSummaryVO> getDoctorAppointmentSummaryWithPatientCountAndAppointmentCount(
@@ -38,9 +41,7 @@ public class DoctorServiceImpl implements DoctorService {
 	public Page<DoctorMasterDTO> getDoctorsWithAboveAverageFee(Integer offset, Integer pageSize) {
 		Page<DoctorMaster> doctorMasters = doctorRepository
 				.findDoctorsWithAboveAverageFee(PageRequest.of(offset, pageSize));
-		List<DoctorMasterDTO> doctorMasterDTOs = modelMapper.map(doctorMasters.getContent(),
-				new TypeToken<List<DoctorMasterDTO>>() {
-				}.getType());
+		List<DoctorMasterDTO> doctorMasterDTOs = doctorMapper.mapToDTOList(doctorMasters.getContent());
 		return new PageImpl<DoctorMasterDTO>(doctorMasterDTOs, doctorMasters.getPageable(),
 				doctorMasters.getTotalElements());
 	}
@@ -50,15 +51,13 @@ public class DoctorServiceImpl implements DoctorService {
 			Integer pageSize) {
 		Page<DoctorMaster> doctorMasters = doctorRepository.getDoctorsHavingAtLeastNAppointments(minCount,
 				PageRequest.of(offset, pageSize));
-		return modelMapper.map(doctorMasters, new TypeToken<Page<DoctorMasterDTO>>() {
-		}.getType());
+		return doctorMapper.mapToDTOPage(doctorMasters);
 	}
 
 	@Override
 	public List<DoctorMasterDTO> getDoctorsHavingAppointmentsBetweenDates(LocalDate fromDate, LocalDate toDate) {
 		List<DoctorMaster> doctorMasters = doctorRepository.getDoctorsHavingAppointmentsBetweenDates(fromDate, toDate);
-		return modelMapper.map(doctorMasters, new TypeToken<List<DoctorMasterDTO>>() {
-		}.getType());
+		return doctorMapper.mapToDTOList(doctorMasters);
 	}
 
 	@Override

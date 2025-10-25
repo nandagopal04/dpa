@@ -2,8 +2,6 @@ package com.dpa.service.impl;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.dpa.dto.PatientDTO;
 import com.dpa.entity.Patient;
+import com.dpa.mapper.PatientMapper;
 import com.dpa.repository.PatientRepository;
 import com.dpa.service.PatientService;
 import com.dpa.vo.PatientAppointmentSummaryVO;
@@ -22,8 +21,12 @@ public class PatientServiceImpl implements PatientService {
 	@Autowired
 	private PatientRepository patientRepository;
 
+	private PatientMapper patientMapper;
+
 	@Autowired
-	private ModelMapper modelMapper;
+	public void setPatientMapper(PatientMapper patientMapper) {
+		this.patientMapper = patientMapper;
+	}
 
 	@Override
 	public Page<PatientAppointmentSummaryVO> getAllPatientsWithAppointmentCount(Integer offset, Integer pageSize) {
@@ -33,15 +36,13 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public Page<PatientDTO> getPatientsGreaterThanAge(Integer age, Integer offset, Integer pageSize) {
 		Page<Patient> patients = patientRepository.getPatientsGreaterThanAge(age, PageRequest.of(offset, pageSize));
-		return modelMapper.map(patients, new TypeToken<Page<PatientDTO>>() {
-		}.getType());
+		return patientMapper.mapToDTOPage(patients);
 	}
 
 	@Override
 	public Page<PatientDTO> getPatientsBookedTwoDoctors(Integer offset, Integer pageSize) {
 		Page<Patient> patients = patientRepository.getPatientsBookedTwoDoctors(PageRequest.of(offset, pageSize));
-		return modelMapper.map(patients, new TypeToken<Page<PatientDTO>>() {
-		}.getType());
+		return patientMapper.mapToDTOPage(patients);
 	}
 
 	@Override
