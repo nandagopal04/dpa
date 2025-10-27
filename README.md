@@ -1,11 +1,11 @@
-##🧩 Project Name: Doctor–Patient Appointment System (JPQL & MapStruct Practice)
+****🧩 Project Name: Doctor–Patient Appointment System (JPQL & MapStruct Practice)****
 
-🧠 Objective
+**🧠 Objective**
 
 This project was designed to understand and implement advanced JPQL queries and MapStruct mappings within a real-world relational model of doctors, patients, and appointments.
 It demonstrates mastery of JPQL joins, subqueries, projections, DTO mapping, and caching — commonly used in enterprise-grade Spring Boot applications.
 
-⚙️ Tech Stack
+**⚙️ Tech Stack**
 
 Backend: Spring Boot, Spring Data JPA
 
@@ -19,7 +19,7 @@ Build Tool: Maven
 
 Language: Java 17
 
-🧱 Database Design
+**🧱 Database Design**
 
 The system consists of three main tables:
 
@@ -31,7 +31,7 @@ Appointment — links doctors and patients, tracking booked appointments and tim
 
 Each appointment references both a doctor and a patient through foreign keys.
 
-🔍 Key Learning Modules
+**🔍 Key Learning Modules**
 1. JPQL Queries
 
 INNER JOIN: Fetch all appointments with their respective doctor names.
@@ -84,7 +84,7 @@ Created nested mappers to map Appointment → AppointmentViewDTO with embedded d
 
 Combined multiple entities into a custom reporting DTO to simulate real-world data reporting use cases.
 
-🚀 Outcome / Learning
+**🚀 Outcome / Learning**
 
 This project solidified practical understanding of:
 
