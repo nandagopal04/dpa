@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.dpa.dto.AppointmentDTO;
 import com.dpa.dto.AppointmentViewDTO;
+import com.dpa.dto.DoctorPatientDTO;
 import com.dpa.entity.Appointment;
 import com.dpa.mapper.AppointmentMapper;
 import com.dpa.repository.AppointmentRepository;
@@ -46,6 +47,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<AppointmentViewDTO> getAllAppointmentViews() {
 		List<Appointment> appointments = appointmentRepository.findAll();
 		return appointmentMapper.mapToAppointmentViewList(appointments);
+	}
+
+	@Override
+	public List<DoctorPatientDTO> getDoctorsWithPatients() {
+		List<Appointment> appointments = appointmentRepository.findAll();
+		return appointmentMapper.mapToDoctorPatientDTOList(appointments);
 	}
 
 }

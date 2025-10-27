@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dpa.dto.AppointmentDTO;
 import com.dpa.dto.AppointmentViewDTO;
+import com.dpa.dto.DoctorPatientDTO;
 import com.dpa.service.AppointmentService;
 import com.dpa.vo.AppointmentSummaryVO;
 
@@ -50,6 +51,13 @@ public class AppointmentController {
 		List<AppointmentViewDTO> appointmentViews = appointmentService.getAllAppointmentViews();
 		return (appointmentViews == null || appointmentViews.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(appointmentViews, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/doctor-patient")
+	public ResponseEntity<List<DoctorPatientDTO>> getAllDoctorsWithPatients() {
+		List<DoctorPatientDTO> doctorPatientDTOs = appointmentService.getDoctorsWithPatients();
+		return (doctorPatientDTOs == null || doctorPatientDTOs.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+				: new ResponseEntity<>(doctorPatientDTOs, HttpStatus.OK);
 	}
 
 }

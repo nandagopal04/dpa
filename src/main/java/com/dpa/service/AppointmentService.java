@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 
 import com.dpa.dto.AppointmentDTO;
 import com.dpa.dto.AppointmentViewDTO;
+import com.dpa.dto.DoctorPatientDTO;
 import com.dpa.vo.AppointmentSummaryVO;
 
 public interface AppointmentService {
@@ -16,5 +17,7 @@ public interface AppointmentService {
 	Page<AppointmentSummaryVO> getAllAppointmentsWithDoctorNames(Integer offset, Integer pageSize);
 
 	List<AppointmentViewDTO> getAllAppointmentViews();
+
+	List<DoctorPatientDTO> getDoctorsWithPatients();
 
 }

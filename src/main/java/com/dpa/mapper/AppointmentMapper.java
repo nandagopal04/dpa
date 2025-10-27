@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import com.dpa.config.GlobalMapperConfig;
 import com.dpa.dto.AppointmentDTO;
 import com.dpa.dto.AppointmentViewDTO;
+import com.dpa.dto.DoctorPatientDTO;
 import com.dpa.entity.Appointment;
 import com.dpa.entity.DoctorMaster;
 import com.dpa.entity.Patient;
@@ -17,5 +18,7 @@ public interface AppointmentMapper extends GlobalMapper<Appointment, Appointment
 	AppointmentViewDTO mapToAppointmentView(Appointment appointment);
 
 	List<AppointmentViewDTO> mapToAppointmentViewList(List<Appointment> appointments);
+
+	List<DoctorPatientDTO> mapToDoctorPatientDTOList(List<Appointment> appointments);
 
 }
