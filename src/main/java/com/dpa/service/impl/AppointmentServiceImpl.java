@@ -44,7 +44,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	public List<AppointmentViewDTO> getAllAppointmentViews() {
-		return appointmentRepository.getAllAppointmentViews();
+		List<Appointment> appointments = appointmentRepository.findAll();
+		return appointmentMapper.mapToAppointmentViewList(appointments);
 	}
 
 }

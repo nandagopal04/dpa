@@ -17,17 +17,9 @@ import lombok.ToString;
 @EqualsAndHashCode()
 public class AppointmentViewDTO {
 
-	private String appointmentId;
+	private String id;
 	private LocalDateTime bookedOn;
-	private DoctorNameDTO doctor;
-	private PatientNameDTO patient;
-
-	public AppointmentViewDTO(String appointmentId, LocalDateTime bookedOn, String doctorId, String doctorName,
-			String patientId, String patientName) {
-		this.appointmentId = appointmentId;
-		this.bookedOn = bookedOn;
-		this.doctor = new DoctorNameDTO(doctorId, doctorName);
-		this.patient = new PatientNameDTO(patientId, patientName);
-	}
+	private DoctorMasterDTO doctorMaster;
+	private PatientDTO patient;
 
 }

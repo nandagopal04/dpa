@@ -1,7 +1,6 @@
 package com.dpa.repository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.dpa.dto.AppointmentViewDTO;
 import com.dpa.entity.Appointment;
 import com.dpa.vo.AppointmentSummaryVO;
 
@@ -30,17 +28,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
 			FROM Appointment a INNER JOIN DoctorMaster d ON a.doctorId = d.id
 			""")
 	Page<AppointmentSummaryVO> getAllWithDoctorNames(Pageable pagable);
-
-	@Query("""
-			SELECT new com.dpa.dto.AppointmentViewDTO(a.id,
-													  a.bookedOn,
-													  d.id,
-													  d.name,
-													  p.id,
-													  p.name)
-			FROM Appointment a JOIN DoctorMaster d ON a.doctorId = d.id
-			JOIN Patient p ON a.patientId = p.id
-			""")
-	List<AppointmentViewDTO> getAllAppointmentViews();
 
 }
